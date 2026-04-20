@@ -15,7 +15,7 @@ export class App {
   apiURL: string;
 
   constructor(private http: HttpClient) {
-    this.apiURL = 'http://localhost:3000';
+    this.apiURL = 'https://vilacio255047.up.railway.app';
     this.READ_tarefas();
   }
 
