@@ -1,35 +1,34 @@
-const dns = require("dns");
-dns.setDefaultResultOrder("ipv4first");
+const express = require("express");
+const cors = require("cors");
+const mongoose = require("mongoose");
 
-const express = require('express');
 const app = express();
-app.use((req, res, next) => {
- res.setHeader("Access-Control-Allow-Origin", "*");
- res.setHeader('Access-Control-Allow-Methods', 'HEAD, GET, POST, PATCH, DELETE');
- res.header(
- "Access-Control-Allow-Headers",
- "Origin, X-Requested-With, Content-Type, Accept"
- );
- next();
-});
+
+// Middlewares
+app.use(cors());
 app.use(express.json());
+
+// Rotas
+const routes = require("./routes/routes");
+app.use("/api", routes);
+
+// Porta (Railway usa automaticamente)
 const PORT = process.env.PORT || 3000;
-const routes = require('./routes/routes');
-app.use('/api', routes);
-app.listen(PORT, () => {
- console.log(`Server Started at ${PORT}`)
-})
-// Obtendo os parametros passados pela linha de comando
-var userArgs = process.argv.slice(2);
-var mongoURL = userArgs[0];
-//Configurando a conexao com o Banco de Dados
-var mongoose = require('mongoose');
-mongoose.connect(mongoURL);
-mongoose.Promise = global.Promise;
+
+// Conexão com MongoDB
+mongoose.connect(process.env.MONGO_URI);
+
 const db = mongoose.connection;
-db.on('error', (error) => {
- console.log(error)
-})
-db.once('connected', () => {
- console.log('Database Connected');
-})
+
+db.on("error", (error) => {
+  console.error("Erro na conexão:", error);
+});
+
+db.once("open", () => {
+  console.log("Banco conectado com sucesso");
+});
+
+// Inicializar servidor
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
