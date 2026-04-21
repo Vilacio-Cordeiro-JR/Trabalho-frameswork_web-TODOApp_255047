@@ -17,6 +17,7 @@ export class App implements OnInit {
 
   constructor(private http: HttpClient) {
     this.apiURL = 'https://vilacio255047.up.railway.app';
+    this.READ_tarefas();
   }
 
   // ✅ Carrega ao iniciar
