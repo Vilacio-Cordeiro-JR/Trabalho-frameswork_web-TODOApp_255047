@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnInit } from '@angular/core';
 import { Tarefa } from "./tarefa";
 import { HttpClient } from '@angular/common/http';
 
@@ -8,7 +8,8 @@ import { HttpClient } from '@angular/common/http';
   standalone: false,
   styleUrl: './app.css'
 })
-export class App {
+export class App implements OnInit {
+
   protected readonly title = signal('TODOapp');
 
   arrayDeTarefas = signal<Tarefa[]>([]);
@@ -16,36 +17,51 @@ export class App {
 
   constructor(private http: HttpClient) {
     this.apiURL = 'https://vilacio255047.up.railway.app';
+  }
+
+  // ✅ Carrega ao iniciar
+  ngOnInit() {
     this.READ_tarefas();
   }
 
+  // ✅ CREATE corrigido
   CREATE_tarefa(descricaoNovaTarefa: string) {
-    var novaTarefa = new Tarefa(descricaoNovaTarefa, false);
-    this.http.post<Tarefa>(`${this.apiURL}/api/post`, novaTarefa).subscribe(
-      resultado => { console.log(resultado); this.READ_tarefas(); });
+    const novaTarefa = new Tarefa(descricaoNovaTarefa, false);
 
+    this.http.post<Tarefa>(`${this.apiURL}/api/post`, novaTarefa)
+      .subscribe(() => this.READ_tarefas());
   }
 
-  READ_tarefas() {
-    this.http.get<Tarefa[]>(`${this.apiURL}/api/getAll`).subscribe(
-      resultado => this.arrayDeTarefas.set(resultado));
+  // ✅ READ ok
+ READ_tarefas(retry = true) {
+  this.http.get<Tarefa[]>(`${this.apiURL}/api/getAll`)
+    .subscribe({
+      next: (resultado) => {
+        this.arrayDeTarefas.set(resultado);
+      },
+      error: (erro) => {
+        console.error("Erro ao carregar tarefas:", erro);
 
-  }
+        // tenta novamente depois de 2 segundos
+        if (retry) {
+          setTimeout(() => this.READ_tarefas(false), 2000);
+        }
+      }
+    });
+}
+
+  // ✅ DELETE corrigido (sem indexOf)
   DELETE_tarefa(tarefa: Tarefa) {
-    var indice = this.arrayDeTarefas().indexOf(tarefa);
-    var id = this.arrayDeTarefas()[indice]._id;
-    this.http.delete<Tarefa>(`${this.apiURL}/api/delete/${id}`).subscribe(
-      resultado => { console.log(resultado); this.READ_tarefas(); });
+    this.http.delete<Tarefa>(`${this.apiURL}/api/delete/${tarefa._id}`)
+      .subscribe(() => this.READ_tarefas());
   }
 
-  UPDATE_tarefa(tarefaAserModificada: Tarefa) {
-    var indice = this.arrayDeTarefas().indexOf(tarefaAserModificada);
-    var id = this.arrayDeTarefas()[indice]._id;
-    this.http.patch<Tarefa>(`${this.apiURL}/api/update/${id}`,
-      tarefaAserModificada).subscribe(
-        resultado => { console.log(resultado); this.READ_tarefas(); });
-
+  // ✅ UPDATE corrigido (sem indexOf)
+  UPDATE_tarefa(tarefa: Tarefa) {
+    this.http.patch<Tarefa>(
+      `${this.apiURL}/api/update/${tarefa._id}`,
+      tarefa
+    ).subscribe(() => this.READ_tarefas());
   }
-
 
 }
