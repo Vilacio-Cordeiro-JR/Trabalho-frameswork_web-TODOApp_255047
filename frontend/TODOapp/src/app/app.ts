@@ -33,10 +33,22 @@ export class App implements OnInit {
   }
 
   // ✅ READ ok
-  READ_tarefas() {
-    this.http.get<Tarefa[]>(`${this.apiURL}/api/getAll`)
-      .subscribe(resultado => this.arrayDeTarefas.set(resultado));
-  }
+ READ_tarefas(retry = true) {
+  this.http.get<Tarefa[]>(`${this.apiURL}/api/getAll`)
+    .subscribe({
+      next: (resultado) => {
+        this.arrayDeTarefas.set(resultado);
+      },
+      error: (erro) => {
+        console.error("Erro ao carregar tarefas:", erro);
+
+        // tenta novamente depois de 2 segundos
+        if (retry) {
+          setTimeout(() => this.READ_tarefas(false), 2000);
+        }
+      }
+    });
+}
 
   // ✅ DELETE corrigido (sem indexOf)
   DELETE_tarefa(tarefa: Tarefa) {
