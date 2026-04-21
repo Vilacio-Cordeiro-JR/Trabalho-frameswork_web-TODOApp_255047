@@ -8,6 +8,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use((req, res, next) => { res.setHeader("Cache-Control", "no-store"); next(); });
+
 // Rotas
 const routes = require("./routes/routes");
 app.use("/api", routes);
