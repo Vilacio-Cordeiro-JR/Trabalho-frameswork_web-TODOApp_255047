@@ -8,6 +8,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get("/api/debug", (req, res) => { res.json({ instance: process.pid, time: new Date() }); });
+
 app.use((req, res, next) => { res.setHeader("Cache-Control", "no-store"); next(); });
 
 // Rotas
