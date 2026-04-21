@@ -21,20 +21,21 @@ export class App {
 
   CREATE_tarefa(descricaoNovaTarefa: string) {
     var novaTarefa = new Tarefa(descricaoNovaTarefa, false);
-    this.http.get<Tarefa[]>(`${this.apiURL}/api/getAll`).subscribe(
-      resultado => this.arrayDeTarefas.set(resultado));
+    this.http.post<Tarefa>(`${this.apiURL}/api/post`, novaTarefa).subscribe(
+      resultado => { console.log(resultado); this.READ_tarefas(); });
+
   }
 
   READ_tarefas() {
     this.http.get<Tarefa[]>(`${this.apiURL}/api/getAll`).subscribe(
       resultado => this.arrayDeTarefas.set(resultado));
+
   }
   DELETE_tarefa(tarefa: Tarefa) {
     var indice = this.arrayDeTarefas().indexOf(tarefa);
     var id = this.arrayDeTarefas()[indice]._id;
     this.http.delete<Tarefa>(`${this.apiURL}/api/delete/${id}`).subscribe(
       resultado => { console.log(resultado); this.READ_tarefas(); });
-
   }
 
   UPDATE_tarefa(tarefaAserModificada: Tarefa) {
@@ -43,6 +44,7 @@ export class App {
     this.http.patch<Tarefa>(`${this.apiURL}/api/update/${id}`,
       tarefaAserModificada).subscribe(
         resultado => { console.log(resultado); this.READ_tarefas(); });
+
   }
 
 
