@@ -35,7 +35,7 @@ export class App implements OnInit {
 
   async ngOnInit(): Promise<void> {
     if (isPlatformBrowser(this.platformId)) {
-      await this.READ_tarefas();
+
     }
   }
 
