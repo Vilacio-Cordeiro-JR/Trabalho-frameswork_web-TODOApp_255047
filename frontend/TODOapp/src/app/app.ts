@@ -26,12 +26,16 @@ export class App implements OnInit {
     this.apiURL = 'https://apitarefas-vilacio255047-sandro253897.up.railway.app';
   }
 
-  login(username: string, password: string) {
-    var credenciais = { "nome": username, "senha": password }
-    this.http.post(`${this.apiURL}/api/login`, credenciais).subscribe(resultado => {
-      this.tokenJWT = JSON.stringify(resultado);
-    });
-  }
+ogin(username: string, password: string) {
+  var credenciais = { "nome": username, "senha": password }
+
+  this.http.post(`${this.apiURL}/api/login`, credenciais).subscribe(resultado => {
+    this.tokenJWT = JSON.stringify(resultado);
+
+    // 👉 ESSENCIAL
+    this.READ_tarefas();
+  });
+}
 
   async ngOnInit(): Promise<void> {
     if (isPlatformBrowser(this.platformId)) {
