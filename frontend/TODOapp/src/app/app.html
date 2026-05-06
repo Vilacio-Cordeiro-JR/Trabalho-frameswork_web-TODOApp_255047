@@ -18,6 +18,6 @@
     <input #username placeholder="nome" class="lg-text-input" />
     <BR>
     <input #password placeholder="senha" class="lg-text-input" />
-    <button class="btn-primary">Login</button>
+    <button class="btn-primary" (click)="login(username.value, password.value)>Login</button>
   </div>
 </div>
