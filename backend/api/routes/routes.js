@@ -3,6 +3,15 @@ const router = express.Router()
 module.exports = router;
 const modeloTarefa = require('../models/tarefa');
 
+//Autorizacao
+function verificaUsuarioSenha(req, res, next) {
+ if (req.body.nome !== 'branqs' || req.body.senha !== '1234') {
+ return res.status(401).json({ auth: false, message: 'Usuario ou Senha incorreta' });
+ }
+ next();
+}
+
+
 router.post('/post', async (req, res) => {
     const objetoTarefa = new modeloTarefa({
     descricao: req.body.descricao,
