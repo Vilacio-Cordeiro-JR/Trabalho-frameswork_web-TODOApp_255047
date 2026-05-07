@@ -32,36 +32,49 @@ export class App implements OnInit {
   nomeUsuario = signal('');
 
   // 1. Defina o signal no topo com os outros signals
-darkMode = signal(false);
+  darkMode = signal(false);
 
-Login(username: string, password: string) {
-  this.http.post(`${this.apiURL}/api/login`, { nome: username, senha: password })
-    .subscribe((res: any) => {
-      this.tokenJWT = JSON.stringify(res);
-      this.roleUsuario.set(res.role);
-      this.nomeUsuario.set(username);
-      
-      // 2. CORREÇÃO: Carrega a preferência que veio do banco no login
-      if (res.darkMode !== undefined) {
+  Login(username: string, password: string) {
+    this.http.post(`${this.apiURL}/api/login`, { nome: username, senha: password })
+      .subscribe((res: any) => {
+        this.tokenJWT = JSON.stringify(res);
+        this.roleUsuario.set(res.role);
+        this.nomeUsuario.set(username);
+
         this.darkMode.set(res.darkMode);
-      }
-      
-      this.READ_tarefas();
-    });
-}
+        if (res.darkMode) {
+          document.body.classList.add('dark-mode');
+        } else {
+          document.body.classList.remove('dark-mode');
+        }
 
-// 3. CORREÇÃO: Este deve ser um método dentro da classe
-toggleDarkMode() {
-  const novoEstado = !this.darkMode();
-  this.darkMode.set(novoEstado);
-  
-  const token = JSON.parse(this.tokenJWT).token;
-  this.http.patch(`${this.apiURL}/api/usuario/tema`, { darkMode: novoEstado }, {
-    headers: { 'id-token': token }
-  }).subscribe({
-    error: (err) => console.error("Erro ao salvar tema:", err)
-  });
-}
+        // 2. CORREÇÃO: Carrega a preferência que veio do banco no login
+        if (res.darkMode !== undefined) {
+          this.darkMode.set(res.darkMode);
+        }
+
+        this.READ_tarefas();
+      });
+  }
+
+  // 3. CORREÇÃO: Este deve ser um método dentro da classe
+  toggleDarkMode() {
+    const novoEstado = !this.darkMode();
+    this.darkMode.set(novoEstado);
+
+    if (novoEstado) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+
+    const token = JSON.parse(this.tokenJWT).token;
+    this.http.patch(`${this.apiURL}/api/usuario/tema`, { darkMode: novoEstado }, {
+      headers: { 'id-token': token }
+    }).subscribe({
+      error: (err) => console.error("Erro ao salvar tema:", err)
+    });
+  }
 
   // Adicione este signal nas propriedades da classe
   modoRegistro = signal(false);
@@ -203,7 +216,7 @@ toggleDarkMode() {
     // Filtra o array de tarefas para contar apenas as que possuem statusRealizada = true
     return this.arrayDeTarefas().filter(t => t.statusRealizada).length;
   }
-  
+
 }
 
 
