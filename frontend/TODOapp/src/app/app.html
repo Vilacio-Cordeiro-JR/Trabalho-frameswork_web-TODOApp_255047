@@ -1,19 +1,36 @@
 <div class="main">
+  <div *ngIf="roleUsuario() === 'adm'" class="admin-panel">
+    <div class="admin-header" (click)="toggleAdminPainel()">
+      <span>Painel de Controle ADM</span>
+      <span>{{ painelAdminAberto() ? '▲' : '▼' }}</span>
+    </div>
+    <div class="admin-content" *ngIf="painelAdminAberto()">
+      <button class="btn-sm" (click)="LISTAR_usuarios()">🔄 Atualizar Lista</button>
+
+      <div *ngIf="listaUsuarios().length === 0" style="margin-top: 10px; font-size: 0.8rem;">
+        Clique em atualizar para ver os usuários.
+      </div>
+      <ul style="margin-top: 1rem;">
+        <li *ngFor="let u of listaUsuarios()" class="user-item">
+          <div class="user-info">
+            <strong>{{ u.nome }}</strong>
+            <span class="role-badge">{{ u.role }}</span>
+          </div>
+
+          <div class="user-actions">
+            <button *ngIf="u.role !== 'adm'" class="btn-sm" (click)="PROMOVER_usuario(u._id)">
+              Promover
+            </button>
+            <button class="btn-sm btn-danger" (click)="DELETAR_usuario(u._id)">
+              Remover
+            </button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
   <h1 *ngIf="!usuarioLogado()">TODO APP by Vilácio & Sandro</h1>
   <h1 *ngIf="usuarioLogado()">ToDoList de {{ nomeUsuario() }}</h1>
-  <div *ngIf="roleUsuario() === 'adm'" class="admin-panel">
-    <hr>
-    <h2>Painel do Administrador</h2>
-    <button (click)="LISTAR_usuarios()">Ver Usuários Cadastrados</button>
-
-    <ul *ngIf="listaUsuarios().length > 0">
-      <li *ngFor="let u of listaUsuarios()">
-        {{ u.nome }} - <strong>{{ u.role }}</strong>
-        <button (click)="DELETAR_usuario(u._id)">Remover</button>
-        <button (click)="PROMOVER_usuario(u._id)">Tornar ADM</button>
-      </li>
-    </ul>
-  </div>
   <div *ngIf="usuarioLogado()">
     <input class="lg-text-input" #campoNovoItem
       (keyup.enter)="CREATE_tarefa(campoNovoItem.value); campoNovoItem.value=''" />

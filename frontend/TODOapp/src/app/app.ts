@@ -165,4 +165,15 @@ export class App implements OnInit {
       error: (err) => alert('Erro ao deletar: ' + err.error.message)
     });
   }
+
+  painelAdminAberto = signal(false);
+
+  toggleAdminPainel() {
+    this.painelAdminAberto.set(!this.painelAdminAberto());
+
+    // Se abrir e a lista estiver vazia, carrega automaticamente
+    if (this.painelAdminAberto() && this.listaUsuarios().length === 0) {
+      this.LISTAR_usuarios();
+    }
+  }
 }
