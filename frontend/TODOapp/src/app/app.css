@@ -1,3 +1,11 @@
+:root {
+    --bg-body: #f5f5f5;
+    --bg-main: #ffffff;
+    --text-color: #4d4d4d;
+    --border-color: #000000;
+    --shadow: rgba(0, 0, 0, .2);
+}
+
 body {
     color: #4d4d4d;
     background-color: #f5f5f5;
@@ -190,4 +198,45 @@ ul li {
     cursor: pointer;
     margin-top: 10px;
     margin-bottom: 20px;
+}
+
+.section-profile h2 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    text-transform: capitalize; /* Deixa o nome do usuário elegante */
+}
+
+.stats p {
+    text-align: center; /* Centraliza para manter o padrão visual do círculo */
+    font-size: 1rem;
+}
+
+/* Definição das cores para o Dark Mode */
+.dark-mode {
+    --bg-body: #121212;      /* Fundo escuro profundo */
+    --bg-main: #1e1e1e;      /* Cards um pouco mais claros que o fundo */
+    --text-color: #e0e0e0;   /* Texto esbranquiçado/cinza claro */
+    --border-color: #ffffff; /* Bordas brancas para manter o estilo minimalista */
+    --shadow: rgba(0, 0, 0, .7);
+}
+
+/* Aplique as variáveis nos seletores existentes */
+body {
+    background-color: var(--bg-body) !important;
+    color: var(--text-color) !important;
+    transition: background 0.3s, color 0.3s; /* Transição suave ao trocar */
+}
+
+.main {
+    background-color: var(--bg-main) !important;
+    border: 2px solid var(--border-color);
+    color: var(--text-color);
+    box-shadow: 0 2px 4px 0 var(--shadow);
+}
+
+/* Ajuste o input para não ficar branco no dark mode */
+.lg-text-input {
+    background-color: var(--bg-main);
+    color: var(--text-color);
+    border: 2px solid var(--border-color);
 }

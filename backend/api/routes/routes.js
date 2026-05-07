@@ -56,7 +56,6 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// ROTA DE LOGIN (Substituindo a antiga)
 router.post('/login', async (req, res) => {
   try {
     const usuario = await Usuario.findOne({ nome: req.body.nome });
@@ -65,16 +64,34 @@ router.post('/login', async (req, res) => {
     const senhaValida = await bcrypt.compare(req.body.senha, usuario.senha);
     if (!senhaValida) return res.status(401).json({ message: 'Senha incorreta' });
 
-    // Incluímos o ID e o ROLE no token
     const token = jwt.sign(
       { id: usuario._id, role: usuario.role },
       'segredo',
       { expiresIn: '1h' }
     );
 
-    res.json({ auth: true, token: token, role: usuario.role });
+    // ADICIONE O CAMPO ABAIXO NA RESPOSTA
+    res.json({
+      auth: true,
+      token: token,
+      role: usuario.role,
+      darkMode: usuario.darkMode // <--- Aqui!
+    });
   } catch (error) {
     res.status(500).json({ message: 'Erro no servidor' });
+  }
+});
+
+router.patch('/usuario/tema', verificaJWT, async (req, res) => {
+  try {
+    const user = await Usuario.findByIdAndUpdate(
+      req.usuarioId,
+      { darkMode: req.body.darkMode },
+      { new: true }
+    );
+    res.json({ darkMode: user.darkMode });
+  } catch (error) {
+    res.status(500).json({ message: "Erro ao salvar tema" });
   }
 });
 
@@ -152,6 +169,8 @@ router.patch('/update/:id', verificaJWT, async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+
+
 
 
 

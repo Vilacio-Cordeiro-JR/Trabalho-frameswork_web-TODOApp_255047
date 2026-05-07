@@ -1,75 +1,90 @@
-<div class="layout-container" *ngIf="usuarioLogado()">
+<div [class.dark-mode]="darkMode()" class="theme-wrapper">
 
-  <div class="main section-todo">
-    <h1>ToDoList de {{ nomeUsuario() }}</h1>
+  <div class="layout-container" *ngIf="usuarioLogado()">
 
-    <input class="lg-text-input" #campoNovoItem
-      (keyup.enter)="CREATE_tarefa(campoNovoItem.value); campoNovoItem.value=''" />
-    <button class="btn-primary" (click)="CREATE_tarefa(campoNovoItem.value); campoNovoItem.value=''">
-      Adicionar Tarefa
-    </button>
+    <div class="main section-todo">
+      <h1>ToDoList de {{ nomeUsuario() }}</h1>
 
-    <ul>
-      <li *ngFor="let tarefaDoLoop of arrayDeTarefas()">
-        <app-item [tarefa]="tarefaDoLoop" (remover)="DELETE_tarefa($event)"
-          (modificaTarefa)="UPDATE_tarefa(tarefaDoLoop)">
-        </app-item>
-      </li>
-    </ul>
-  </div>
+      <input class="lg-text-input" #campoNovoItem
+        (keyup.enter)="CREATE_tarefa(campoNovoItem.value); campoNovoItem.value=''" />
+      
+      <button class="btn-primary" (click)="CREATE_tarefa(campoNovoItem.value); campoNovoItem.value=''">
+        Adicionar Tarefa
+      </button>
 
-  <div class="side-panel">
-
-    <div class="main section-profile">
-      <div class="profile-circle"></div>
-      <h2>Perfil</h2>
-      <p class="profile-name"><strong>{{ nomeUsuario() }}</strong></p>
-
-      <div class="stats">
-        <p>Total de tarefas: <strong>{{ arrayDeTarefas().length }}</strong></p>
-        <p>Concluídas: <strong>{{ tarefasFeitas() }}</strong></p>
-      </div>
+      <ul>
+        <li *ngFor="let tarefaDoLoop of arrayDeTarefas()">
+          <app-item [tarefa]="tarefaDoLoop" (remover)="DELETE_tarefa($event)"
+            (modificaTarefa)="UPDATE_tarefa(tarefaDoLoop)">
+          </app-item>
+        </li>
+      </ul>
     </div>
 
-    <div *ngIf="roleUsuario() === 'adm'" class="admin-panel shadow-minimal">
-      <div class="admin-header" (click)="toggleAdminPainel()">
-        <span>Painel de Controle ADM</span>
-        <span>{{ painelAdminAberto() ? '▲' : '▼' }}</span>
+    <div class="side-panel">
+
+      <div class="main section-profile">
+        <div class="profile-circle"></div>
+        <h2>Perfil de {{ nomeUsuario() }}</h2>
+        
+        <div class="stats">
+          <p>Tarefas concluídas:
+            <strong>{{ tarefasFeitas() }}/{{ arrayDeTarefas().length }}</strong>
+          </p>
+          
+          <button (click)="toggleDarkMode()" class="btn-theme">
+            {{ darkMode() ? '☀️ Modo Claro' : '🌙 Modo Escuro' }}
+          </button>
+        </div>
       </div>
-      <div class="admin-content" *ngIf="painelAdminAberto()">
-        <button class="btn-sm" (click)="LISTAR_usuarios()">🔄 Atualizar Lista</button>
-        <ul style="margin-top: 1rem;">
-          <li *ngFor="let u of listaUsuarios()" class="user-item">
-            <div class="user-info">
-              <strong>{{ u.nome }}</strong>
-              <span class="role-badge">{{ u.role }}</span>
-            </div>
-            <div class="user-actions">
-              <button *ngIf="u.role !== 'adm'" class="btn-sm" (click)="PROMOVER_usuario(u._id)">Promover</button>
-              <button class="btn-sm btn-danger" (click)="DELETAR_usuario(u._id)">Remover</button>
-            </div>
-          </li>
-        </ul>
+
+      <div *ngIf="roleUsuario() === 'adm'" class="admin-panel shadow-minimal">
+        <div class="admin-header" (click)="toggleAdminPainel()">
+          <span>Painel de Controle ADM</span>
+          <span>{{ painelAdminAberto() ? '▲' : '▼' }}</span>
+        </div>
+        <div class="admin-content" *ngIf="painelAdminAberto()">
+          <button class="btn-sm" (click)="LISTAR_usuarios()">🔄 Atualizar Lista</button>
+          <ul style="margin-top: 1rem;">
+            <li *ngFor="let u of listaUsuarios()" class="user-item">
+              <div class="user-info">
+                <strong>{{ u.nome }}</strong>
+                <span class="role-badge">{{ u.role }}</span>
+              </div>
+              <div class="user-actions">
+                <button *ngIf="u.role !== 'adm'" class="btn-sm" (click)="PROMOVER_usuario(u._id)">Promover</button>
+                <button class="btn-sm btn-danger" (click)="DELETAR_usuario(u._id)">Remover</button>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
+    </div> </div> <div class="main login-center" *ngIf="!usuarioLogado()">
+    <h1>TODO APP by Vilácio & Sandro</h1>
+    <p>Faça login para acessar suas tarefas!</p>
+    <h2>{{ modoRegistro() ? 'Criar Conta' : 'Entrar' }}</h2>
+
+    <input #username placeholder="nome" class="lg-text-input" />
+    <br>
+    <input #password type="password" placeholder="senha" class="lg-text-input" />
+
+    <div class="botoes-auth">
+      <button *ngIf="!modoRegistro()" class="btn-primary" (click)="Login(username.value, password.value)">Login</button>
+      <button *ngIf="modoRegistro()" class="btn-primary"
+        (click)="Register(username.value, password.value)">Cadastrar</button>
+      <a (click)="toggleModo()" style="cursor: pointer; display: block; margin-top: 10px;">
+        {{ modoRegistro() ? 'Já tenho conta' : 'Criar nova conta' }}
+      </a>
     </div>
   </div>
-</div>
 
-<div class="main" *ngIf="!usuarioLogado()">
-  <h1>TODO APP by Vilácio & Sandro</h1>
-  <p>Faça login para acessar suas tarefas!</p>
-  <h2>{{ modoRegistro() ? 'Criar Conta' : 'Entrar' }}</h2>
+</div> ```
 
-  <input #username placeholder="nome" class="lg-text-input" />
-  <br>
-  <input #password type="password" placeholder="senha" class="lg-text-input" />
+### O que foi corrigido:
+1.  **Hierarquia do Dark Mode:** O `[class.dark-mode]="darkMode()"` foi movido para o topo (`theme-wrapper`). Isso garante que todo o fundo da página e os componentes internos mudem de cor.
+2.  **Remoção de Duplicidade:** Removi o `layout-container` e o `*ngIf="usuarioLogado()"` que estavam acidentamente dentro da div de `stats`.
+3.  **Botão de Tema:** Criei a classe `btn-theme` para o botão de alternar modo, para que você possa estilizá-lo melhor no CSS.
+4.  **Organização:** O código agora segue uma leitura lógica: Tema > Layout > Colunas.
 
-  <div class="botoes-auth">
-    <button *ngIf="!modoRegistro()" class="btn-primary" (click)="Login(username.value, password.value)">Login</button>
-    <button *ngIf="modoRegistro()" class="btn-primary"
-      (click)="Register(username.value, password.value)">Cadastrar</button>
-    <a (click)="toggleModo()" style="cursor: pointer; display: block; margin-top: 10px;">
-      {{ modoRegistro() ? 'Já tenho conta' : 'Criar nova conta' }}
-    </a>
-  </div>
-</div>
+### Nome do Commit sugerido:
+> `refactor(html): organiza hierarquia do tema e limpa estrutura do dashboard`
