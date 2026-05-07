@@ -19,8 +19,20 @@ function verificaADM(req, res, next) {
 
 // Listar todos os usuários (Apenas ADM)
 router.get('/usuarios', verificaADM, async (req, res) => {
-  const usuarios = await Usuario.find({}, '-senha'); // Busca tudo exceto a senha
-  res.json(usuarios);
+  try {
+    // Buscamos todos os usuários
+    const usuarios = await Usuario.find({}, '-senha').lean();
+
+    // Para cada usuário, buscamos suas tarefas
+    const usuariosComTarefas = await Promise.all(usuarios.map(async (user) => {
+      const tarefas = await modeloTarefa.find({ owner: user._id });
+      return { ...user, tarefas }; // Adiciona o array de tarefas ao objeto do usuário
+    }));
+
+    res.json(usuariosComTarefas);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 // Deletar usuário (Apenas ADM)
