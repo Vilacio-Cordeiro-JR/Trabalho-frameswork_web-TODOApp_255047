@@ -170,6 +170,24 @@ router.patch('/update/:id', verificaJWT, async (req, res) => {
   }
 });
 
+router.patch('/usuario/promover/:id', verificaADM, async (req, res) => {
+  try {
+    const result = await Usuario.findByIdAndUpdate(
+      req.params.id, 
+      { role: 'adm' }, // Força a role para adm
+      { new: true }
+    );
+    
+    if (!result) {
+      return res.status(404).json({ message: 'Usuário não encontrado' });
+    }
+    
+    res.json(result);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 
 
 
