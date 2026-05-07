@@ -1,7 +1,53 @@
 const express = require('express');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const router = express.Router()
 module.exports = router;
 const modeloTarefa = require('../models/tarefa');
+const Usuario = require('../models/usuario');
+
+// ROTA DE REGISTRO
+router.post('/register', async (req, res) => {
+  try {
+    const { nome, senha, role } = req.body;
+    
+    const salt = await bcrypt.genSalt(10);
+    const senhaHash = await bcrypt.hash(senha, salt);
+
+    const novoUsuario = new Usuario({
+      nome,
+      senha: senhaHash,
+      role: role || 'user'
+    });
+
+    await novoUsuario.save();
+    res.status(201).json({ message: "Usuário criado!" });
+  } catch (error) {
+    res.status(400).json({ message: "Erro ao registrar usuário" });
+  }
+});
+
+// ROTA DE LOGIN (Substituindo a antiga)
+router.post('/login', async (req, res) => {
+  try {
+    const usuario = await Usuario.findOne({ nome: req.body.nome });
+    if (!usuario) return res.status(401).json({ message: 'Usuário não encontrado' });
+
+    const senhaValida = await bcrypt.compare(req.body.senha, usuario.senha);
+    if (!senhaValida) return res.status(401).json({ message: 'Senha incorreta' });
+
+    // Incluímos o ID e o ROLE no token
+    const token = jwt.sign(
+      { id: usuario._id, role: usuario.role }, 
+      'segredo', 
+      { expiresIn: '1h' }
+    );
+
+    res.json({ auth: true, token: token, role: usuario.role });
+  } catch (error) {
+    res.status(500).json({ message: 'Erro no servidor' });
+  }
+});
 
 //Autorizacao
 function verificaUsuarioSenha(req, res, next) {
@@ -10,16 +56,6 @@ function verificaUsuarioSenha(req, res, next) {
  }
  next();
 }
-
-//Autenticacao
-var jwt = require('jsonwebtoken');
-router.post('/login', (req, res, next) => {
- if (req.body.nome === 'branqs' && req.body.senha === '1234') {
- const token = jwt.sign({ id: req.body.nome }, 'segredo', { expiresIn: 300 });
- return res.json({ auth: true, token: token });
- }
- res.status(500).json({ message: 'Login invalido!' });
-})
 
 //Nova forma de Autorizacao
 function verificaJWT(req, res, next) {

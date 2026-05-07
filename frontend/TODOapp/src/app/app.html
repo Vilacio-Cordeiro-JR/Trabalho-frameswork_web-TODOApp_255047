@@ -21,5 +21,26 @@
     <button class="btn-primary" (click)="Login(username.value, password.value)">
       Login
     </button>
+    <div *ngIf="!usuarioLogado()">
+      <h2 *ngIf="modoRegistro()">Criar Conta</h2>
+      <h2 *ngIf="!modoRegistro()">Entrar</h2>
+
+      <input #username placeholder="nome" class="lg-text-input" />
+      <br>
+      <input #password type="password" placeholder="senha" class="lg-text-input" />
+
+      <div class="botoes-auth">
+        <button *ngIf="!modoRegistro()" class="btn-primary" (click)="Login(username.value, password.value)">
+          Login
+        </button>
+        <button *ngIf="modoRegistro()" class="btn-primary" (click)="Register(username.value, password.value)">
+          Cadastrar
+        </button>
+
+        <a (click)="toggleModo()" style="cursor: pointer; display: block; margin-top: 10px;">
+          {{ modoRegistro() ? 'Já tenho conta' : 'Criar nova conta' }}
+        </a>
+      </div>
+    </div>
   </div>
 </div>

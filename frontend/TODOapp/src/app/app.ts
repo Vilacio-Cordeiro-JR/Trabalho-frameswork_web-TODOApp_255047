@@ -10,6 +10,7 @@ import { firstValueFrom } from 'rxjs';
   standalone: false,
   styleUrl: './app.css'
 })
+
 export class App implements OnInit {
   protected readonly title = signal('TODOapp');
 
@@ -28,12 +29,31 @@ export class App implements OnInit {
 
   Login(username: string, password: string) {
     var credenciais = { "nome": username, "senha": password }
-  
+
     this.http.post(`${this.apiURL}/api/login`, credenciais).subscribe(resultado => {
       this.tokenJWT = JSON.stringify(resultado);
-  
+
       // 👉 ESSENCIAL
       this.READ_tarefas();
+    });
+  }
+
+  // Adicione este signal nas propriedades da classe
+  modoRegistro = signal(false);
+
+  toggleModo() {
+    this.modoRegistro.set(!this.modoRegistro());
+  }
+
+  Register(username: string, password: string) {
+    const credenciais = { "nome": username, "senha": password };
+
+    this.http.post(`${this.apiURL}/api/register`, credenciais).subscribe({
+      next: () => {
+        alert('Conta criada! Agora faça o login.');
+        this.modoRegistro.set(false);
+      },
+      //error: (err) => alert('Erro ao registrar: ' + err.error.message)
     });
   }
 
