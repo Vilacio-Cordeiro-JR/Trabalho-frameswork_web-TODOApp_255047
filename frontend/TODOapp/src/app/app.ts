@@ -27,19 +27,18 @@ export class App implements OnInit {
     this.apiURL = 'https://apitarefas-vilacio255047-sandro253897.up.railway.app';
   }
 
+  // No app.ts
+  roleUsuario = signal('');
   nomeUsuario = signal('');
 
   Login(username: string, password: string) {
-    var credenciais = { "nome": username, "senha": password }
-
-    this.http.post(`${this.apiURL}/api/login`, credenciais).subscribe(resultado => {
-      this.tokenJWT = JSON.stringify(resultado);
-
-      this.nomeUsuario.set(username);
-
-      // 👉 ESSENCIAL
-      this.READ_tarefas();
-    });
+    this.http.post(`${this.apiURL}/api/login`, { nome: username, senha: password })
+      .subscribe((res: any) => {
+        this.tokenJWT = JSON.stringify(res);
+        this.roleUsuario.set(res.role); // Armazena se é 'adm' ou 'user'
+        this.nomeUsuario.set(username);
+        this.READ_tarefas();
+      });
   }
 
   // Adicione este signal nas propriedades da classe

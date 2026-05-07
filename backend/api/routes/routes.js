@@ -6,6 +6,35 @@ module.exports = router;
 const modeloTarefa = require('../models/tarefa');
 const Usuario = require('../models/usuario');
 
+// Middleware para verificar se é ADM
+function verificaADM(req, res, next) {
+  const token = req.headers['id-token'];
+  jwt.verify(token, 'segredo', function (err, decoded) {
+    if (err || decoded.role !== 'adm') {
+      return res.status(403).json({ message: 'Acesso restrito a administradores' });
+    }
+    next();
+  });
+}
+
+// Listar todos os usuários (Apenas ADM)
+router.get('/usuarios', verificaADM, async (req, res) => {
+  const usuarios = await Usuario.find({}, '-senha'); // Busca tudo exceto a senha
+  res.json(usuarios);
+});
+
+// Deletar usuário (Apenas ADM)
+router.delete('/usuario/:id', verificaADM, async (req, res) => {
+  await Usuario.findByIdAndDelete(req.params.id);
+  res.json({ message: 'Usuário removido' });
+});
+
+// Atualizar usuário (Apenas ADM)
+router.patch('/usuario/:id', verificaADM, async (req, res) => {
+  const result = await Usuario.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  res.json(result);
+});
+
 // ROTA DE REGISTRO
 router.post('/register', async (req, res) => {
   try {

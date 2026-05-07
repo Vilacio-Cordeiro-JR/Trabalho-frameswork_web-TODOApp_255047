@@ -1,6 +1,19 @@
 <div class="main">
   <h1 *ngIf="!usuarioLogado()">TODO APP by Vilácio & Sandro</h1>
   <h1 *ngIf="usuarioLogado()">ToDoList de {{ nomeUsuario() }}</h1>
+  <div *ngIf="roleUsuario() === 'adm'" class="admin-panel">
+    <hr>
+    <h2>Painel do Administrador</h2>
+    <button (click)="LISTAR_usuarios()">Ver Usuários Cadastrados</button>
+
+    <ul *ngIf="listaUsuarios().length > 0">
+      <li *ngFor="let u of listaUsuarios()">
+        {{ u.nome }} - <strong>{{ u.role }}</strong>
+        <button (click)="DELETAR_usuario(u._id)">Remover</button>
+        <button (click)="PROMOVER_usuario(u._id)">Tornar ADM</button>
+      </li>
+    </ul>
+  </div>
   <div *ngIf="usuarioLogado()">
     <input class="lg-text-input" #campoNovoItem
       (keyup.enter)="CREATE_tarefa(campoNovoItem.value); campoNovoItem.value=''" />
