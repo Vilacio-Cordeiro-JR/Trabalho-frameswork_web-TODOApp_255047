@@ -27,11 +27,15 @@ export class App implements OnInit {
     this.apiURL = 'https://apitarefas-vilacio255047-sandro253897.up.railway.app';
   }
 
+  nomeUsuario = signal('');
+
   Login(username: string, password: string) {
     var credenciais = { "nome": username, "senha": password }
 
     this.http.post(`${this.apiURL}/api/login`, credenciais).subscribe(resultado => {
       this.tokenJWT = JSON.stringify(resultado);
+
+      this.nomeUsuario.set(username);
 
       // 👉 ESSENCIAL
       this.READ_tarefas();

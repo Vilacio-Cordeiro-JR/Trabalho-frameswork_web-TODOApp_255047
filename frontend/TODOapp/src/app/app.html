@@ -1,6 +1,6 @@
 <div class="main">
-  <h1>Vilácio 255047</h1><br>
-  <h1>Sandro 253897</h1>
+  <h1 *ngIf="!usuarioLogado()">TODO APP by Vilácio & Sandro</h1>
+  <h1 *ngIf="usuarioLogado()">ToDoList de {{ nomeUsuario() }}</h1>
   <div *ngIf="usuarioLogado()">
     <input class="lg-text-input" #campoNovoItem
       (keyup.enter)="CREATE_tarefa(campoNovoItem.value); campoNovoItem.value=''" />
@@ -15,12 +15,7 @@
     </ul>
   </div>
   <div *ngIf="!usuarioLogado()">
-    <input #username placeholder="nome" class="lg-text-input" />
-    <BR>
-    <input #password placeholder="senha" class="lg-text-input" />
-    <button class="btn-primary" (click)="Login(username.value, password.value)">
-      Login
-    </button>
+    <p>Faça login para acessar suas tarefas!</p>
     <div *ngIf="!usuarioLogado()">
       <h2 *ngIf="modoRegistro()">Criar Conta</h2>
       <h2 *ngIf="!modoRegistro()">Entrar</h2>
