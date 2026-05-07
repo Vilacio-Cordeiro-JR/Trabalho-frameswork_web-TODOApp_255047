@@ -176,4 +176,9 @@ export class App implements OnInit {
       this.LISTAR_usuarios();
     }
   }
+
+  tarefasFeitas() {
+    // Filtra o array de tarefas para contar apenas as que possuem statusRealizada = true
+    return this.arrayDeTarefas().filter(t => t.statusRealizada).length;
+  }
 }
