@@ -78,13 +78,4 @@
     </div>
   </div>
 
-</div> ```
-
-### O que foi corrigido:
-1.  **Hierarquia do Dark Mode:** O `[class.dark-mode]="darkMode()"` foi movido para o topo (`theme-wrapper`). Isso garante que todo o fundo da página e os componentes internos mudem de cor.
-2.  **Remoção de Duplicidade:** Removi o `layout-container` e o `*ngIf="usuarioLogado()"` que estavam acidentamente dentro da div de `stats`.
-3.  **Botão de Tema:** Criei a classe `btn-theme` para o botão de alternar modo, para que você possa estilizá-lo melhor no CSS.
-4.  **Organização:** O código agora segue uma leitura lógica: Tema > Layout > Colunas.
-
-### Nome do Commit sugerido:
-> `refactor(html): organiza hierarquia do tema e limpa estrutura do dashboard`
+</div> 

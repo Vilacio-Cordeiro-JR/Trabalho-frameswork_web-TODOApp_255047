@@ -1,30 +1,44 @@
+:root {
+    --bg-body: #f5f5f5;
+    --bg-main: #ffffff;
+    --text-color: #4d4d4d;
+    --border-color: #000000;
+    --shadow: rgba(0, 0, 0, .2);
+}
+
 body {
     font-family: Helvetica, Arial, sans-serif;
-   }
-   .btn-wrapper {
+}
+
+.btn-wrapper {
     /* flexbox */
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
-   }
-   .btn {
+}
+
+.btn {
     color: #000;
     background-color: #fff;
     border: 2px solid #cecece;
     padding: .35rem 1rem .25rem 1rem;
     font-size: 1rem;
-   }
-   .btn:hover {
+}
+
+.btn:hover {
     background-color: #ecf2fd;
-   }
-   .btn:active {
+}
+
+.btn:active {
     background-color: #d1e0fe;
-   }
-   btn:focus {
+}
+
+btn:focus {
     outline: none;
     border: black solid 2px;
-   }
-   .btn-primary {
+}
+
+.btn-primary {
     color: #fff;
     background-color: #000;
     width: 100%;
@@ -32,17 +46,54 @@ body {
     font-size: 1.3rem;
     border: black solid 2px;
     margin: 1rem 0;
-   }
-   .btn-primary:hover {
+}
+
+.btn-primary:hover {
     background-color: #444242;
-   }
-   .btn-primary:focus {
+}
+
+.btn-primary:focus {
     color: #000;
     outline: none;
     border: #000 solid 2px;
     background-color: #d7ecff;
-   }
-   .btn-primary:active {
+}
+
+.btn-primary:active {
     background-color: #212020;
-   }
-      
+}
+
+/* Definição das cores para o Dark Mode */
+.dark-mode {
+    --bg-body: #121212;
+    /* Fundo escuro profundo */
+    --bg-main: #1e1e1e;
+    /* Cards um pouco mais claros que o fundo */
+    --text-color: #e0e0e0;
+    /* Texto esbranquiçado/cinza claro */
+    --border-color: #ffffff;
+    /* Bordas brancas para manter o estilo minimalista */
+    --shadow: rgba(0, 0, 0, .7);
+}
+
+/* Aplique as variáveis nos seletores existentes */
+body {
+    background-color: var(--bg-body) !important;
+    color: var(--text-color) !important;
+    transition: background 0.3s, color 0.3s;
+    /* Transição suave ao trocar */
+}
+
+.main {
+    background-color: var(--bg-main) !important;
+    border: 2px solid var(--border-color);
+    color: var(--text-color);
+    box-shadow: 0 2px 4px 0 var(--shadow);
+}
+
+/* Ajuste o input para não ficar branco no dark mode */
+.lg-text-input {
+    background-color: var(--bg-main);
+    color: var(--text-color);
+    border: 2px solid var(--border-color);
+}
