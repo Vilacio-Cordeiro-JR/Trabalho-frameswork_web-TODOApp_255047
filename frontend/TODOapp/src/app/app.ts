@@ -122,4 +122,47 @@ export class App implements OnInit {
       }
     ).subscribe(() => this.READ_tarefas());
   }
+
+  listaUsuarios = signal<any[]>([]);
+
+  // 1. LISTAR: Busca todos os usuários no banco
+  LISTAR_usuarios() {
+    const token = JSON.parse(this.tokenJWT).token;
+    this.http.get<any[]>(`${this.apiURL}/api/usuarios`, {
+      headers: { 'id-token': token }
+    }).subscribe({
+      next: (res) => this.listaUsuarios.set(res),
+      error: (err) => console.error('Erro ao listar:', err)
+    });
+  }
+
+  // 2. PROMOVER: Altera a role do usuário para 'adm'
+  PROMOVER_usuario(id: string) {
+    const token = JSON.parse(this.tokenJWT).token;
+    this.http.patch(`${this.apiURL}/api/usuario/promover/${id}`, {}, {
+      headers: { 'id-token': token }
+    }).subscribe({
+      next: () => {
+        alert('Usuário promovido!');
+        this.LISTAR_usuarios(); // Atualiza a lista na tela
+      },
+      error: (err) => alert('Erro: ' + err.error.message)
+    });
+  }
+
+  // 3. DELETAR: Remove o usuário permanentemente
+  DELETAR_usuario(id: string) {
+    if (!confirm('Tem certeza que deseja remover este usuário?')) return;
+
+    const token = JSON.parse(this.tokenJWT).token;
+    this.http.delete(`${this.apiURL}/api/usuario/${id}`, {
+      headers: { 'id-token': token }
+    }).subscribe({
+      next: () => {
+        alert('Usuário removido!');
+        this.LISTAR_usuarios(); // Atualiza a lista na tela
+      },
+      error: (err) => alert('Erro ao deletar: ' + err.error.message)
+    });
+  }
 }
