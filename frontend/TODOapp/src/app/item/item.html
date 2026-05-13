@@ -2,7 +2,7 @@
     <input [id]="tarefa.descricao" type="checkbox" [checked]="tarefa.statusRealizada"
         (change)="tarefa.statusRealizada = !tarefa.statusRealizada; modificaTarefa.emit()" />
     <label [for]="tarefa.descricao">{{tarefa.descricao}}</label>
-    <div *ngIf="!emEdicao" class="btn-wrapper">
+    <div *ngIf="!emEdicao" class="btn-wrapper btn-group">
         <button class="btn" (click)="emEdicao = true ">Editar</button>
         <button class="btn btn-warn" (click)="onRemover()">Remover</button>
     </div>
