@@ -446,3 +446,65 @@ button {
     opacity: 0.4; /* Slightly dimmer to increase contrast between finished/unfinished */
     color: #888;
 }
+
+.admin-content .btn-sm {
+    background-color: var(--bg-main);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.admin-content .btn-sm:hover {
+    background-color: var(--accent-color);
+    color: #fff;
+}
+
+/* Mantém o botão de remover legível em ambos os temas */
+.btn-danger {
+    color: #ff4757 !important;
+    border-color: #ff4757 !important;
+    background: transparent;
+}
+
+.btn-danger:hover {
+    background-color: #ff4757 !important;
+    color: white !important;
+}
+
+.user-tasks-preview {
+    background-color: rgba(0, 0, 0, 0.05); /* Cinza bem leve no modo claro */
+    color: var(--text-color); /* Força a cor do tema atual */
+}
+
+.dark-mode .user-tasks-preview {
+    background-color: rgba(255, 255, 255, 0.08); /* Cinza sutil no modo escuro */
+}
+
+.mini-task span {
+    color: var(--text-color); /* Garante que o texto não fique preto no fundo escuro */
+}
+
+/* Melhora a visibilidade do 'Nenhuma tarefa criada' */
+.no-tasks {
+    color: var(--text-color);
+    opacity: 0.6;
+}
+
+.user-item-container {
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+/* Opcional: Adicionar uma borda interna ao admin-content para separar do header */
+.admin-content {
+    border-top: 1px solid var(--border-color);
+}
+
+.role-badge {
+    background: #000; /* Cor fixa para ADM */
+    color: #fff;
+    border: 1px solid transparent;
+}
+
+.dark-mode .role-badge {
+    background: #333;
+    border: 1px solid #555; /* Borda para destacar no fundo escuro */
+}
