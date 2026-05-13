@@ -225,14 +225,14 @@ router.patch('/usuario/editar/:id', verificaADM, async (req, res) => {
   try {
     const updates = { ...req.body };
     
-    // Se estiver alterando a senha, precisa gerar um novo hash
+    // Se o objeto enviado contiver uma senha, gera o hash antes de salvar
     if (updates.senha) {
       const salt = await bcrypt.genSalt(10);
       updates.senha = await bcrypt.hash(updates.senha, salt);
     }
 
     const result = await Usuario.findByIdAndUpdate(req.params.id, updates, { new: true });
-    res.json(result);
+    res.json({ message: "Usuário atualizado com sucesso!" });
   } catch (error) {
     res.status(400).json({ message: "Erro ao atualizar usuário" });
   }

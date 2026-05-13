@@ -67,12 +67,18 @@
                 </div>
 
                 <div class="user-actions">
-                  <button class="btn-sm" (click)="abrirPromptEdicao(u)">
+                  <button class="btn-sm" (click)="abrirPromptEdicao(u)" title="Editar Nome">
                     ✏️
                   </button>
+
+                  <button class="btn-sm" (click)="abrirPromptSenha(u)" title="Alterar Senha">
+                    🔑
+                  </button>
+
                   <button *ngIf="u.role !== 'adm'" class="btn-sm" (click)="PROMOVER_usuario(u._id)">
                     ⭐
                   </button>
+
                   <button class="btn-sm btn-danger" (click)="DELETAR_usuario(u._id)">
                     🗑️
                   </button>

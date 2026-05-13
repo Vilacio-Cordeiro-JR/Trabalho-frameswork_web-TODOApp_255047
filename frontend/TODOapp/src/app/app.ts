@@ -238,6 +238,31 @@ export class App implements OnInit {
     }
   }
 
+  abrirPromptSenha(usuario: any) {
+    const novaSenha = prompt(`Digite a nova senha para ${usuario.nome}:`);
+
+    // Verifica se não é nulo e se tem pelo menos 4 caracteres (opcional)
+    if (novaSenha !== null && novaSenha.trim().length >= 4) {
+      this.ALTERAR_SENHA_usuario(usuario._id, novaSenha);
+    } else if (novaSenha !== null) {
+      alert("A senha deve ter pelo menos 4 caracteres.");
+    }
+  }
+
+  ALTERAR_SENHA_usuario(id: string, senha: string) {
+    const token = JSON.parse(this.tokenJWT).token;
+
+    this.http.patch(`${this.apiURL}/api/usuario/editar/${id}`, { senha: senha }, {
+      headers: { 'id-token': token }
+    }).subscribe({
+      next: () => {
+        alert('Senha alterada com sucesso!');
+        this.LISTAR_usuarios();
+      },
+      error: (err) => alert('Erro ao alterar senha: ' + err.error.message)
+    });
+  }
+
   painelAdminAberto = signal(false);
 
   toggleAdminPainel() {
