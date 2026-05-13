@@ -1,13 +1,9 @@
-/* =============================================
-   VARIÁVEIS GLOBAIS
-   ============================================= */
 :root {
     --bg-body: #f8f9fa;
     --bg-main: #ffffff;
     --text-color: #2d3436;
     --border-color: #dfe6e9;
     --accent-color: #000000;
-    --accent-inverse: #ffffff;
     --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.05);
     --radius: 12px;
 }
@@ -18,32 +14,26 @@
     --text-color: #f5f5f5;
     --border-color: #333333;
     --accent-color: #ffffff;
-    --accent-inverse: #000000;
     --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* =============================================
-   BASE
-   ============================================= */
 body {
     background-color: var(--bg-body);
     color: var(--text-color);
-    transition: background 0.3s, color 0.3s;
     font-family: Helvetica, Arial, sans-serif;
     margin: 0;
+    transition: background 0.3s, color 0.3s;
 }
 
 ul { padding-inline-start: 0; }
 ul li { list-style: none; text-align: left; }
 
-/* =============================================
-   LAYOUT PRINCIPAL (card do login)
-   ============================================= */
+/* Login card */
 .main {
-    max-width: 480px;
-    width: 88%;
-    margin: 3rem auto;
-    padding: 2.5rem 2.5rem 2rem;
+    max-width: 500px;
+    width: 85%;
+    margin: 2rem auto;
+    padding: 2rem;
     text-align: center;
     background-color: var(--bg-main);
     border: 1px solid var(--border-color);
@@ -53,12 +43,9 @@ ul li { list-style: none; text-align: left; }
 }
 
 @media screen and (min-width: 600px) {
-    .main { width: 68%; }
+    .main { width: 70%; }
 }
 
-/* =============================================
-   FORMULÁRIO / LOGIN
-   ============================================= */
 label {
     font-size: 1.5rem;
     font-weight: bold;
@@ -68,135 +55,113 @@ label {
 
 .lg-text-input {
     width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1.5px solid var(--border-color);
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--border-color);
     border-radius: 8px;
     background-color: var(--bg-main);
     color: var(--text-color);
     font-size: 1rem;
+    display: block;
     box-sizing: border-box;
     margin-bottom: 0.6rem;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.2s;
 }
 
 .lg-text-input:focus {
     outline: none;
     border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
 }
 
-.dark-mode .lg-text-input:focus {
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
-}
-
-/* =============================================
-   BOTÕES
-   ============================================= */
+/* Botões */
 .btn-wrapper {
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
     gap: 8px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .btn-menu { flex-basis: 32%; }
 
 .btn {
-    color: var(--text-color);
-    background-color: var(--bg-main);
-    border: 1.5px solid var(--border-color);
-    border-radius: 8px;
-    padding: 0.4rem 1rem 0.35rem;
+    color: #000;
+    background-color: #fff;
+    border: 2px solid #cecece;
+    border-radius: 6px;
+    padding: 0.35rem 1rem 0.25rem;
     font-size: 1rem;
     cursor: pointer;
-    transition: background 0.15s, border-color 0.15s;
+    transition: background 0.15s;
 }
 
-.btn:hover { background-color: rgba(0, 0, 0, 0.04); border-color: #b0b8bc; }
-.dark-mode .btn:hover { background-color: rgba(255, 255, 255, 0.06); }
-.btn:active { background-color: rgba(0, 0, 0, 0.08); }
-.btn:focus { outline: none; border-color: var(--accent-color); }
+.btn:hover { background-color: #ecf2fd; }
+.btn:active { background-color: #d1e0fe; }
+.btn:focus { outline: none; border-color: #000; }
 
 .btn-primary {
     width: 100%;
-    padding: 0.75rem;
-    background-color: var(--accent-color);
-    color: var(--accent-inverse);
-    border: 2px solid var(--accent-color);
-    border-radius: 8px;
-    font-size: 1.15rem;
+    padding: 0.85rem;
+    background: #000;
+    color: #fff;
+    border: 2px solid #000;
+    border-radius: 6px;
+    font-size: 1.2rem;
     font-weight: bold;
     cursor: pointer;
-    margin: 1rem 0 0.5rem;
+    margin-top: 10px;
+    margin-bottom: 20px;
     transition: opacity 0.15s;
 }
 
 .btn-primary:hover { opacity: 0.82; }
 .btn-primary:active { opacity: 0.65; }
-.btn-primary:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.15);
+
+.dark-mode .btn-primary {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
 }
 
 .btn-sm {
     border-radius: 6px;
-    border: 1.5px solid var(--border-color);
-    padding: 5px 14px;
-    font-size: 0.75rem;
+    border: 1px solid var(--border-color);
+    padding: 5px 12px;
+    font-size: 0.7rem;
     font-weight: 500;
     margin-left: 5px;
     cursor: pointer;
     background: transparent;
-    color: var(--text-color);
-    transition: all 0.15s;
+    transition: all 0.2s;
 }
 
-.btn-sm:hover {
-    background: var(--accent-color);
-    color: var(--accent-inverse);
-    border-color: var(--accent-color);
-}
+.btn-sm:hover { background: var(--accent-color); color: var(--bg-main); }
 
-.btn-danger { color: #e84040; border-color: #e84040; }
-.btn-danger:hover { background: #e84040; color: #fff; border-color: #e84040; }
+.btn-danger { color: red; border-color: red; }
+.btn-danger:hover { background: #ff4757; border-color: #ff4757; color: #fff; }
 
 .btn-theme {
     background: none;
-    border: 1.5px solid var(--border-color);
+    border: 1px solid var(--border-color);
     border-radius: 50px;
-    padding: 8px 22px;
+    padding: 8px 20px;
     cursor: pointer;
     color: var(--text-color);
     font-weight: 500;
-    transition: background 0.15s, border-color 0.15s;
 }
 
-.btn-theme:hover { background: rgba(0,0,0,0.04); border-color: var(--accent-color); }
-.dark-mode .btn-theme:hover { background: rgba(255,255,255,0.06); }
+/* Estados */
+.active { color: green; }
+.done { text-decoration: line-through; opacity: 0.6; }
 
-/* =============================================
-   ESTADOS
-   ============================================= */
-.active { color: #2ecc71; }
-
-.done {
-    text-decoration: line-through;
-    opacity: 0.5;
-}
-
-/* =============================================
-   LAYOUT FLEXBOX PRINCIPAL
-   ============================================= */
+/* Layout principal */
 .layout-container {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
     gap: 20px;
     margin: 0 auto;
-    padding: 24px 20px;
+    padding: 20px;
     max-width: 1100px;
-    box-sizing: border-box;
 }
 
 @media screen and (min-width: 900px) {
@@ -205,45 +170,11 @@ label {
         align-items: flex-start;
         justify-content: center;
     }
-
     .section-todo { flex: 2; margin: 0; }
-
-    .side-panel {
-        flex: 1;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-    }
+    .side-panel { flex: 1; width: 100%; display: flex; flex-direction: column; gap: 16px; }
 }
 
-/* =============================================
-   TODO SECTION
-   ============================================= */
-.section-todo {
-    background-color: var(--bg-main);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-soft);
-    padding: 2rem;
-    box-sizing: border-box;
-}
-
-.section-todo h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1.25rem;
-}
-
-.section-todo ul li {
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.section-todo ul li:last-child { border-bottom: none; }
-
-/* =============================================
-   PERFIL
-   ============================================= */
+/* Perfil */
 .section-profile {
     width: 100% !important;
     margin: 0 !important;
@@ -251,134 +182,119 @@ label {
     border: 1px solid var(--border-color);
     border-radius: var(--radius);
     box-shadow: var(--shadow-soft);
-    padding: 2rem 1.5rem;
+    padding: 1.5rem;
     text-align: center;
     box-sizing: border-box;
 }
 
 .section-profile h2 {
-    font-size: 1.3rem;
-    margin-bottom: 8px;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
     text-transform: capitalize;
 }
 
 .profile-circle {
-    width: 90px;
-    height: 90px;
-    border: 3px solid var(--accent-color);
+    width: 100px;
+    height: 100px;
+    border: 4px solid var(--accent-color);
     border-radius: 50%;
-    margin: 0 auto 18px;
+    margin: 0 auto 15px;
 }
 
-.profile-name { font-size: 1.1rem; margin-bottom: 12px; }
+.profile-name { font-size: 1.2rem; margin-bottom: 15px; }
 
 .stats {
-    border-top: 1.5px solid var(--border-color);
-    padding-top: 14px;
-    margin-top: 4px;
+    text-align: left;
+    border-top: 2px solid var(--border-color);
+    padding-top: 15px;
     font-size: 0.9rem;
 }
 
-.stats p {
-    text-align: center;
-    font-size: 0.95rem;
-    margin: 6px 0;
-}
+.stats p { text-align: center; font-size: 1rem; }
 
-/* =============================================
-   PAINEL ADM
-   ============================================= */
+/* Painel ADM */
 .admin-panel {
     margin-top: 0;
-    overflow: hidden;
-    background: var(--bg-main);
-    border: 1px solid var(--border-color);
     border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    background: var(--bg-main);
     box-shadow: var(--shadow-soft);
 }
 
-/* Header usa as variáveis — funciona no dark e light mode */
 .admin-header {
     background-color: var(--accent-color);
-    color: var(--accent-inverse);
-    padding: 13px 1.2rem;
+    color: var(--bg-main);
+    padding: 12px 1.2rem;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-weight: bold;
     text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 0.5px;
+    font-size: 0.9rem;
     transition: opacity 0.2s;
 }
 
-.admin-header:hover { opacity: 0.88; }
+.admin-header:hover { opacity: 0.9; }
 
 .admin-content {
-    padding: 0.75rem 1.2rem 1.2rem;
-    max-height: 420px;
+    padding: 1rem;
+    max-height: 400px;
     overflow-y: auto;
 }
 
-/* =============================================
-   ITENS DE USUÁRIO (ADM)
-   ============================================= */
+/* Itens ADM */
 .user-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
 }
 
 .user-item-container {
-    padding: 14px 0;
+    padding: 1rem;
     border-bottom: 1px solid var(--border-color);
     list-style: none;
     transition: background 0.2s;
 }
 
-.user-item-container:last-child { border-bottom: none; }
-.user-item-container:hover { background-color: rgba(0, 0, 0, 0.02); }
-.dark-mode .user-item-container:hover { background-color: rgba(255, 255, 255, 0.03); }
+.user-item-container:hover { background-color: rgba(0,0,0,0.02); }
+.dark-mode .user-item-container:hover { background-color: rgba(255,255,255,0.02); }
 
 .user-info { font-size: 0.9rem; }
 
 .role-badge {
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 0.6rem;
-    letter-spacing: 0.6px;
+    font-size: 0.65rem;
+    letter-spacing: 0.5px;
     background: var(--border-color);
     color: var(--text-color);
     padding: 3px 8px;
     border-radius: 20px;
-    margin-left: 6px;
+    margin-left: 5px;
 }
 
-/* =============================================
-   PREVIEW DE TAREFAS (ADM)
-   ============================================= */
 .user-tasks-preview {
-    margin: 10px 0 0 8px;
-    padding: 10px 12px;
-    background-color: rgba(0, 0, 0, 0.03);
+    margin: 10px 0 0 10px;
+    padding: 10px;
+    background-color: rgba(0,0,0,0.03);
     border-radius: 8px;
-    border-left: 3px solid var(--border-color);
+    border-left: 4px solid var(--border-color);
 }
 
-.dark-mode .user-tasks-preview { background-color: rgba(255, 255, 255, 0.04); }
+.dark-mode .user-tasks-preview { background-color: rgba(255,255,255,0.03); }
 
 .mini-task {
-    font-size: 0.82rem;
+    font-size: 0.85rem;
     margin-bottom: 5px;
     list-style: none !important;
-    color: var(--text-color);
 }
 
 .no-tasks {
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     font-style: italic;
-    opacity: 0.6;
-    margin: 6px 0 0 8px;
+    opacity: 0.7;
+    margin: 5px 0 0 10px;
 }
