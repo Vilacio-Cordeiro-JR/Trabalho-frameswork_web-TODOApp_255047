@@ -508,3 +508,27 @@ button {
     background: #333;
     border: 1px solid #555; /* Borda para destacar no fundo escuro */
 }
+
+.admin-header {
+    /* Em vez de background-color: #000 fixo, usamos a variável de destaque */
+    background-color: var(--accent-color);
+    
+    /* Esta variável muda automaticamente entre preto e branco conforme o tema */
+    color: var(--bg-main); 
+    
+    padding: 12px 1.2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* Opcional: inverter as cores no Dark Mode para um contraste melhor */
+.dark-mode .admin-header {
+    background-color: var(--border-color); /* Uma borda clara ou cinza */
+    color: var(--bg-body); /* Texto escuro no fundo claro */
+}
