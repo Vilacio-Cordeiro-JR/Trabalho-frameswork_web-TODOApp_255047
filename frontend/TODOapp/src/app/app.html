@@ -4,10 +4,8 @@
 
     <div class="main section-todo">
       <h1>ToDoList de {{ nomeUsuario() }}</h1>
-
       <input class="lg-text-input" #campoNovoItem
         (keyup.enter)="CREATE_tarefa(campoNovoItem.value); campoNovoItem.value=''" />
-
       <button class="btn-primary" (click)="CREATE_tarefa(campoNovoItem.value); campoNovoItem.value=''">
         Adicionar Tarefa
       </button>
@@ -22,16 +20,13 @@
     </div>
 
     <div class="side-panel">
-
       <div class="main section-profile">
         <div class="profile-circle"></div>
         <h2>Perfil de {{ nomeUsuario() }}</h2>
-
         <div class="stats">
           <p>Tarefas concluídas:
             <strong>{{ tarefasFeitas() }}/{{ arrayDeTarefas().length }}</strong>
           </p>
-
           <button (click)="toggleDarkMode()" class="btn-theme">
             {{ darkMode() ? '☀️ Modo Claro' : '🌙 Modo Escuro' }}
           </button>
@@ -45,19 +40,43 @@
         </div>
 
         <div class="admin-content" *ngIf="painelAdminAberto()">
+
+          <div style="background: rgba(0,0,0,0.1); padding: 10px; border-radius: 8px; margin-bottom: 1rem;">
+            <h4 style="margin-top: 0;">Novo Usuário</h4>
+            <input #newUserName placeholder="Nome" class="btn-sm" style="margin-bottom: 5px; width: 90%;">
+            <input #newUserPass type="password" placeholder="Senha" class="btn-sm"
+              style="margin-bottom: 5px; width: 90%;">
+            <select #newUserRole class="btn-sm" style="margin-bottom: 5px; width: 95%;">
+              <option value="user">User</option>
+              <option value="adm">Adm</option>
+            </select>
+            <button class="btn-primary btn-sm" style="width: 100%;"
+              (click)="CRIAR_usuario(newUserName.value, newUserPass.value, newUserRole.value)">
+              Criar Usuário
+            </button>
+          </div>
+
           <button class="btn-sm" (click)="LISTAR_usuarios()">🔄 Atualizar Lista</button>
 
-          <ul style="margin-top: 1rem;">
+          <ul style="margin-top: 1rem; padding: 0; list-style: none;">
             <li *ngFor="let u of listaUsuarios()" class="user-item-container">
-
               <div class="user-item">
                 <div class="user-info">
                   <strong>{{ u.nome }}</strong>
                   <span class="role-badge">{{ u.role }}</span>
                 </div>
+
                 <div class="user-actions">
-                  <button *ngIf="u.role !== 'adm'" class="btn-sm" (click)="PROMOVER_usuario(u._id)">Promover</button>
-                  <button class="btn-sm btn-danger" (click)="DELETAR_usuario(u._id)">Remover</button>
+                  <button class="btn-sm"
+                    (click)="EDITAR_usuario(u._id, prompt('Novo nome para ' + u.nome + ':', u.nome))">
+                    ✏️
+                  </button>
+                  <button *ngIf="u.role !== 'adm'" class="btn-sm" (click)="PROMOVER_usuario(u._id)">
+                    ⭐
+                  </button>
+                  <button class="btn-sm btn-danger" (click)="DELETAR_usuario(u._id)">
+                    🗑️
+                  </button>
                 </div>
               </div>
 
@@ -69,11 +88,8 @@
                     </span>
                   </li>
                 </ul>
-                <p class="no-tasks" *ngIf="!u.tarefas || u.tarefas.length === 0">
-                  Nenhuma tarefa criada.
-                </p>
+                <p class="no-tasks" *ngIf="!u.tarefas || u.tarefas.length === 0">Sem tarefas.</p>
               </div>
-
             </li>
           </ul>
         </div>
@@ -82,14 +98,10 @@
   </div>
 
   <div class="main login-center" *ngIf="!usuarioLogado()">
-    <h1>TODO APP by Vilácio & Sandro</h1>
-    <p>Faça login para acessar suas tarefas!</p>
+    <h1>TODO APP</h1>
     <h2>{{ modoRegistro() ? 'Criar Conta' : 'Entrar' }}</h2>
-
     <input #username placeholder="nome" class="lg-text-input" />
-    <br>
     <input #password type="password" placeholder="senha" class="lg-text-input" />
-
     <div class="botoes-auth">
       <button *ngIf="!modoRegistro()" class="btn-primary" (click)="Login(username.value, password.value)">Login</button>
       <button *ngIf="modoRegistro()" class="btn-primary"
@@ -99,5 +111,4 @@
       </a>
     </div>
   </div>
-
 </div>

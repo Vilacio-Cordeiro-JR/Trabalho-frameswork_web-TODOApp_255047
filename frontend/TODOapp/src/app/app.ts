@@ -200,6 +200,34 @@ export class App implements OnInit {
       error: (err) => alert('Erro ao deletar: ' + err.error.message)
     });
   }
+  // Adicione no topo da classe App
+  CRIAR_usuario(nome: string, senha: string, role: string) {
+    const token = JSON.parse(this.tokenJWT).token;
+    this.http.post(`${this.apiURL}/api/usuario/criar`, { nome, senha, role }, {
+      headers: { 'id-token': token }
+    }).subscribe({
+      next: () => {
+        alert('Usuário criado!');
+        this.LISTAR_usuarios();
+      },
+      error: (err) => alert('Erro: ' + err.error.message)
+    });
+  }
+
+  // No app.ts, ajuste a função para evitar erros com o 'null' do prompt
+  EDITAR_usuario(id: string, novoNome: string | null) {
+    if (!novoNome) return; // Se cancelar ou deixar vazio, não faz nada
+
+    const token = JSON.parse(this.tokenJWT).token;
+    this.http.patch(`${this.apiURL}/api/usuario/editar/${id}`, { nome: novoNome }, {
+      headers: { 'id-token': token }
+    }).subscribe({
+      next: () => {
+        this.LISTAR_usuarios();
+      },
+      error: (err) => alert('Erro: ' + err.error.message)
+    });
+  }
 
   painelAdminAberto = signal(false);
 
@@ -216,6 +244,7 @@ export class App implements OnInit {
     // Filtra o array de tarefas para contar apenas as que possuem statusRealizada = true
     return this.arrayDeTarefas().filter(t => t.statusRealizada).length;
   }
+
 
 }
 

@@ -200,6 +200,44 @@ router.patch('/usuario/promover/:id', verificaADM, async (req, res) => {
   }
 });
 
+// Criar usuário pelo ADM (permite definir a role diretamente)
+router.post('/usuario/criar', verificaADM, async (req, res) => {
+  try {
+    const { nome, senha, role } = req.body;
+    const salt = await bcrypt.genSalt(10);
+    const senhaHash = await bcrypt.hash(senha, salt);
+
+    const novoUsuario = new Usuario({
+      nome,
+      senha: senhaHash,
+      role: role || 'user'
+    });
+
+    await novoUsuario.save();
+    res.status(201).json({ message: "Usuário criado com sucesso!" });
+  } catch (error) {
+    res.status(400).json({ message: "Erro ao criar usuário" });
+  }
+});
+
+// Editar usuário pelo ADM (nome, senha ou role)
+router.patch('/usuario/editar/:id', verificaADM, async (req, res) => {
+  try {
+    const updates = { ...req.body };
+    
+    // Se estiver alterando a senha, precisa gerar um novo hash
+    if (updates.senha) {
+      const salt = await bcrypt.genSalt(10);
+      updates.senha = await bcrypt.hash(updates.senha, salt);
+    }
+
+    const result = await Usuario.findByIdAndUpdate(req.params.id, updates, { new: true });
+    res.json(result);
+  } catch (error) {
+    res.status(400).json({ message: "Erro ao atualizar usuário" });
+  }
+});
+
 
 
 
