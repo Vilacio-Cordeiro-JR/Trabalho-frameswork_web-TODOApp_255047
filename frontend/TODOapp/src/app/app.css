@@ -514,7 +514,7 @@ button {
     background-color: var(--accent-color);
     
     /* Esta variável muda automaticamente entre preto e branco conforme o tema */
-    color: var(--bg-body); 
+    color: var(--bg-main)(--bg-body); 
     
     padding: 12px 1.2rem;
     cursor: pointer;
@@ -530,5 +530,5 @@ button {
 /* Opcional: inverter as cores no Dark Mode para um contraste melhor */
 .dark-mode .admin-header {
     background-color: var(--border-color); /* Uma borda clara ou cinza */
-    color: var(--bg-main); /* Texto escuro no fundo claro */
+    color: var(--bg-body); /* Texto escuro no fundo claro */
 }
