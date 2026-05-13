@@ -63,7 +63,7 @@ label {
     font-size: 1rem;
     display: block;
     box-sizing: border-box;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.35rem;
     transition: border-color 0.2s;
 }
 
@@ -84,9 +84,9 @@ label {
 .btn-menu { flex-basis: 32%; }
 
 .btn {
-    color: #000;
-    background-color: #fff;
-    border: 2px solid #cecece;
+    color: var(--text-color);
+    background-color: var(--bg-main);
+    border: 2px solid var(--border-color);
     border-radius: 6px;
     padding: 0.35rem 1rem 0.25rem;
     font-size: 1rem;
@@ -185,6 +185,7 @@ label {
     padding: 1.5rem;
     text-align: center;
     box-sizing: border-box;
+    flex-shrink: 0;
 }
 
 .section-profile h2 {
