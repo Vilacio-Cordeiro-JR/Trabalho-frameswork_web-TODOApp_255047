@@ -129,7 +129,9 @@ ul li {
     border-color: red;
 }
 
-/* 2. ESTRUTURA DE LAYOUT */
+/* 1. RESET E VARIÁVEIS (Mantenha o que já temos no topo) */
+
+/* 2. ESTRUTURA DE LAYOUT DINÂMICO */
 .layout-container {
     display: flex;
     flex-direction: column;
@@ -137,15 +139,50 @@ ul li {
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
-    min-height: 80vh; /* Garante que o login não fique colado no topo */
-    justify-content: center; /* Centraliza verticalmente se estiver sozinho */
+    min-height: 80vh;
+    justify-content: center; /* Centraliza verticalmente o login */
 }
 
-/* Centralização específica para telas com apenas um card (Login/Cadastro) */
-/* Se houver apenas a .section-todo (ou .main) sem o .side-panel ao lado */
+/* O SEGREDO: Se NÃO houver painel lateral, limita a largura (Login/Cadastro) */
 .layout-container:not(:has(.side-panel)) .main {
     max-width: 500px;
     margin: 0 auto;
+    width: 90%; /* Para não colar nas bordas no mobile */
+}
+
+/* Desktop: Lado a Lado (Apenas se houver o painel de perfil/adm) */
+@media screen and (min-width: 900px) {
+    /* Só ativa o modo colunas se o painel lateral existir */
+    .layout-container:has(.side-panel) {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+    .section-todo {
+        flex: 1.5;
+    }
+
+    .side-panel {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+/* 3. AJUSTE DE BOTÕES E TAREFAS (Para evitar o visual "esticado") */
+.user-item {
+    display: flex;
+    flex-wrap: wrap; /* Permite que botões quebrem linha se necessário */
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-sm {
+    flex: 1; /* Faz os botões dividirem o espaço igualmente */
+    min-width: 80px;
 }
 
 /* Desktop: Lado a Lado (Apenas quando houver o painel lateral) */
