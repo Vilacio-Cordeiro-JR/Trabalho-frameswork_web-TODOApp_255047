@@ -1,437 +1,300 @@
+/* =============================================
+   VARIÁVEIS GLOBAIS
+   ============================================= */
 :root {
-    --bg-body: #f5f5f5;
-    --bg-main: #ffffff;
-    --text-color: #4d4d4d;
-    --border-color: #000000;
-    --shadow: rgba(0, 0, 0, .2);
+    --bg-body: #f8f9fa;
+    --bg-main: #ffffff;
+    --text-color: #2d3436;
+    --border-color: #dfe6e9;
+    --accent-color: #000000;
+    --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.05);
+    --radius: 12px;
 }
-
+ 
+.dark-mode {
+    --bg-body: #121212;
+    --bg-main: #1e1e1e;
+    --text-color: #f5f5f5;
+    --border-color: #333333;
+    --accent-color: #ffffff;
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+ 
+/* =============================================
+   BASE
+   ============================================= */
 body {
-    color: #4d4d4d;
-    background-color: #f5f5f5;
-    color: #4d4d4d;
+    background-color: var(--bg-body);
+    color: var(--text-color);
+    transition: background 0.3s, color 0.3s;
+    margin: 0;
 }
-
-.main {
-    max-width: 500px;
-    width: 85%;
-    margin: 2rem auto;
-    padding: 1rem;
-    text-align: center;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2), 0 2.5rem 5rem 0 rgba(0, 0, 0, .1);
-}
-
-@media screen and (min-width: 600px) {
-    .main {
-        width: 70%;
-    }
-}
-
-label {
-    font-size: 1.5rem;
-    font-weight: bold;
-    display: block;
-    padding-bottom: 1rem;
-}
-
-.lg-text-input {
-    width: 100%;
-    padding: 1rem;
-    border: 2px solid #000;
-    display: block;
-    box-sizing: border-box;
-    font-size: 1rem;
-}
-
-.btn-wrapper {
-    margin-bottom: 2rem;
-}
-
-.btn-menu {
-    flex-basis: 32%;
-}
-
-.active {
-    color: green;
-}
-
+ 
 ul {
-    padding-inline-start: 0;
+    padding-inline-start: 0;
 }
-
+ 
 ul li {
-    list-style: none;
-    text-align: left;
+    list-style: none;
+    text-align: left;
 }
-
-/* Container do Painel ADM */
-.admin-panel {
-    margin-top: 2rem;
-    border: 2px solid #000;
-    background-color: #fff;
-    text-align: left;
-}
-
-/* Cabeçalho clicável para abrir/fechar */
-.admin-header {
-    background-color: #000;
-    color: #fff;
-    padding: 10px 1rem;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-}
-
-/* Conteúdo interno do painel */
-.admin-content {
-    padding: 1rem;
-    max-height: 400px;
-    overflow-y: auto;
-}
-
-/* Lista de usuários dentro do painel */
-.user-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
-}
-
-.user-info {
-    font-size: 0.9rem;
-}
-
-.role-badge {
-    font-size: 0.7rem;
-    background: #eee;
-    padding: 2px 6px;
-    border-radius: 4px;
-    margin-left: 5px;
-}
-
-/* Botões pequenos para o painel */
-.btn-sm {
-    padding: 4px 8px;
-    font-size: 0.7rem;
-    margin-left: 5px;
-    cursor: pointer;
-    border: 1px solid #000;
-    background: transparent;
-}
-
-.btn-danger {
-    color: red;
-    border-color: red;
-}
-
-/* Container Flexbox */
-.layout-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    margin: 0 auto;
-    padding: 20px;
-    max-width: 1100px;
-}
-
-/* Quando a tela for de computador (Desktop) */
-@media screen and (min-width: 900px) {
-    .layout-container {
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: center;
-    }
-
-    .section-todo {
-        flex: 2;
-        /* Mais larga */
-        margin: 0;
-    }
-
-    .side-panel {
-        flex: 1;
-        /* Mais estreita */
-        width: 100%;
-    }
-}
-
-/* Estilos do Perfil conforme seu desenho */
-.section-profile {
-    width: 100% !important;
-    margin: 0 !important;
-}
-
-.profile-circle {
-    width: 100px;
-    height: 100px;
-    border: 4px solid #000;
-    border-radius: 50%;
-    margin: 0 auto 15px;
-}
-
-.profile-name {
-    font-size: 1.2rem;
-    margin-bottom: 15px;
-}
-
-.stats {
-    text-align: left;
-    border-top: 2px solid #000;
-    padding-top: 15px;
-    font-size: 0.9rem;
-}
-
-/* Ajuste do botão Adicionar */
-.btn-primary {
-    width: 100%;
-    padding: 1rem;
-    background: #000;
-    color: #fff;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
-
-.section-profile h2 {
-    font-size: 1.4rem;
-    margin-bottom: 10px;
-    text-transform: capitalize; /* Deixa o nome do usuário elegante */
-}
-
-.stats p {
-    text-align: center; /* Centraliza para manter o padrão visual do círculo */
-    font-size: 1rem;
-}
-
-/* Definição das cores para o Dark Mode */
-.dark-mode {
-    --bg-body: #121212;      /* Fundo escuro profundo */
-    --bg-main: #1e1e1e;      /* Cards um pouco mais claros que o fundo */
-    --text-color: #e0e0e0;   /* Texto esbranquiçado/cinza claro */
-    --border-color: #ffffff; /* Bordas brancas para manter o estilo minimalista */
-    --shadow: rgba(0, 0, 0, .7);
-}
-
-/* Aplique as variáveis nos seletores existentes */
-body {
-    background-color: var(--bg-body) !important;
-    color: var(--text-color) !important;
-    transition: background 0.3s, color 0.3s; /* Transição suave ao trocar */
-}
-
+ 
+/* =============================================
+   LAYOUT PRINCIPAL
+   ============================================= */
 .main {
-    background-color: var(--bg-main) !important;
-    border: 2px solid var(--border-color);
-    color: var(--text-color);
-    box-shadow: 0 2px 4px 0 var(--shadow);
+    max-width: 500px;
+    width: 85%;
+    margin: 2rem auto;
+    padding: 2rem;
+    text-align: center;
+    background-color: var(--bg-main);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.2s ease;
+    box-sizing: border-box;
 }
-
-/* Ajuste o input para não ficar branco no dark mode */
+ 
+@media screen and (min-width: 600px) {
+    .main { width: 70%; }
+}
+ 
+/* =============================================
+   FORMULÁRIO
+   ============================================= */
+label {
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: block;
+    padding-bottom: 1rem;
+}
+ 
 .lg-text-input {
-    background-color: var(--bg-main);
-    color: var(--text-color);
-    border: 2px solid var(--border-color);
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-main);
+    color: var(--text-color);
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
 }
-
-/* Container de cada usuário na lista do ADM */
-.user-item-container {
-    border-bottom: 1px solid var(--border-color);
-    padding: 15px 0;
-    list-style: none;
-}
-
-/* Área cinza sutil onde ficam as tarefas do usuário */
-.user-tasks-preview {
-    margin-left: 30px; /* Indenta para a direita */
-    margin-top: 10px;
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.05); /* Fundo leve no modo claro */
-    border-radius: 4px;
-    border-left: 3px solid var(--border-color); /* Linha vertical de indicação */
-}
-
-/* Ajuste do fundo das tarefas no Dark Mode */
-.dark-mode .user-tasks-preview {
-    background-color: rgba(255, 255, 255, 0.05);
-}
-
-/* Estilo de cada tarefa pequena */
-.mini-task {
-    font-size: 0.85rem;
-    margin-bottom: 5px;
-    list-style: none !important;
-}
-
-/* Efeito para tarefas que o usuário já marcou como feitas */
-.done {
-    text-decoration: line-through;
-    opacity: 0.6;
-}
-
-/* Texto de quando o usuário não tem tarefas */
-.no-tasks {
-    font-size: 0.8rem;
-    font-style: italic;
-    opacity: 0.7;
-    margin: 5px 0 0 30px;
-}
-
-/* Garante que os botões de ação fiquem alinhados no topo do container */
-.user-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 5px;
-}
-
-:root {
-    --bg-body: #f8f9fa;
-    --bg-main: #ffffff;
-    --text-color: #2d3436;
-    --border-color: #dfe6e9; /* Borda mais suave que o preto puro */
-    --accent-color: #000000;
-    --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.05);
-    --radius: 12px; /* Bordas suavizadas */
-}
-
-.dark-mode {
-    --bg-body: #121212;
-    --bg-main: #1e1e1e;
-    --text-color: #f5f5f5;
-    --border-color: #333333;
-    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-body {
-    background-color: var(--bg-body);
-    color: var(--text-color);
-    transition: all 0.3s ease;
-    margin: 0;
-}
-
-/* Container Principal - Suavizado */
-.main {
-    background-color: var(--bg-main);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
-    padding: 2rem;
-    box-shadow: var(--shadow-soft);
-    transition: transform 0.2s ease;
-}
-
-/* Inputs Smooth */
-.lg-text-input {
-    width: 100%;
-    padding: 0.8rem 1rem;
-    border: 2px solid var(--border-color);
-    border-radius: 8px;
-    background: var(--bg-main);
-    color: var(--text-color);
-    transition: border-color 0.2s;
-}
-
+ 
 .lg-text-input:focus {
-    outline: none;
-    border-color: var(--accent-color);
+    outline: none;
+    border-color: var(--accent-color);
 }
-
-/* --- PAINEL ADM REESTILIZADO --- */
-.admin-panel {
-    margin-top: 1rem;
-    border-radius: var(--radius);
-    overflow: hidden; /* Garante que o header respeite o border-radius */
-    border: 1px solid var(--border-color);
-    background: var(--bg-main);
-    box-shadow: var(--shadow-soft);
+ 
+/* =============================================
+   BOTÕES
+   ============================================= */
+.btn-wrapper { margin-bottom: 2rem; }
+.btn-menu { flex-basis: 32%; }
+ 
+.btn-primary {
+    width: 100%;
+    padding: 1rem;
+    background: var(--accent-color);
+    color: var(--bg-main);
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
-
-.admin-header {
-    background-color: var(--accent-color);
-    color: #fff;
-    padding: 12px 1.2rem;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    transition: opacity 0.2s;
-}
-
-.admin-header:hover {
-    opacity: 0.9;
-}
-
-.user-item-container {
-    padding: 1rem;
-    border-bottom: 1px solid var(--border-color);
-    transition: background 0.2s;
-}
-
-.user-item-container:hover {
-    background-color: rgba(0,0,0,0.02);
-}
-
-.dark-mode .user-item-container:hover {
-    background-color: rgba(255,255,255,0.02);
-}
-
-/* Tags de Role */
-.role-badge {
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 0.65rem;
-    letter-spacing: 0.5px;
-    background: var(--border-color);
-    color: var(--text-color);
-    padding: 3px 8px;
-    border-radius: 20px; /* Estilo pílula */
-}
-
-/* Preview de Tarefas Subtil */
-.user-tasks-preview {
-    margin: 10px 0 0 10px;
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.03);
-    border-radius: 8px;
-    border-left: 4px solid var(--accent-color);
-}
-
-.dark-mode .user-tasks-preview {
-    background-color: rgba(255, 255, 255, 0.03);
-}
-
-/* Botões Smooth */
+ 
 .btn-sm {
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
-    padding: 5px 12px;
-    font-weight: 500;
-    transition: all 0.2s;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    padding: 5px 12px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    margin-left: 5px;
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.2s;
 }
-
+ 
 .btn-sm:hover {
-    background: var(--accent-color);
-    color: white;
+    background: var(--accent-color);
+    color: var(--bg-main);
 }
-
-.btn-danger:hover {
-    background: #ff4757;
-    border-color: #ff4757;
-}
-
-/* Botão de Tema */
+ 
+.btn-danger { color: red; border-color: red; }
+.btn-danger:hover { background: #ff4757; border-color: #ff4757; }
+ 
 .btn-theme {
-    background: none;
-    border: 1px solid var(--border-color);
-    border-radius: 50px;
-    padding: 8px 20px;
-    cursor: pointer;
-    color: var(--text-color);
-    font-weight: 500;
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: 50px;
+    padding: 8px 20px;
+    cursor: pointer;
+    color: var(--text-color);
+    font-weight: 500;
+}
+ 
+/* =============================================
+   ESTADOS
+   ============================================= */
+.active { color: green; }
+ 
+.done {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+ 
+/* =============================================
+   LAYOUT FLEXBOX
+   ============================================= */
+.layout-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 1100px;
+}
+ 
+@media screen and (min-width: 900px) {
+    .layout-container {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: center;
+    }
+ 
+    .section-todo { flex: 2; margin: 0; }
+    .side-panel { flex: 1; width: 100%; }
+}
+ 
+/* =============================================
+   PERFIL
+   ============================================= */
+.section-profile {
+    width: 100% !important;
+    margin: 0 !important;
+}
+ 
+.section-profile h2 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+}
+ 
+.profile-circle {
+    width: 100px;
+    height: 100px;
+    border: 4px solid var(--accent-color);
+    border-radius: 50%;
+    margin: 0 auto 15px;
+}
+ 
+.profile-name { font-size: 1.2rem; margin-bottom: 15px; }
+ 
+.stats {
+    text-align: left;
+    border-top: 2px solid var(--accent-color);
+    padding-top: 15px;
+    font-size: 0.9rem;
+}
+ 
+.stats p {
+    text-align: center;
+    font-size: 1rem;
+}
+ 
+/* =============================================
+   PAINEL ADM
+   ============================================= */
+.admin-panel {
+    margin-top: 1rem;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    background: var(--bg-main);
+    box-shadow: var(--shadow-soft);
+}
+ 
+.admin-header {
+    background-color: var(--accent-color);
+    color: var(--bg-main);
+    padding: 12px 1.2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+ 
+.admin-header:hover { opacity: 0.9; }
+ 
+.admin-content {
+    padding: 1rem;
+    max-height: 400px;
+    overflow-y: auto;
+}
+ 
+/* =============================================
+   ITENS DE USUÁRIO
+   ============================================= */
+.user-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+ 
+.user-item-container {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    list-style: none;
+    transition: background 0.2s;
+}
+ 
+.user-item-container:hover { background-color: rgba(0, 0, 0, 0.02); }
+.dark-mode .user-item-container:hover { background-color: rgba(255, 255, 255, 0.02); }
+ 
+.user-info { font-size: 0.9rem; }
+ 
+.role-badge {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.65rem;
+    letter-spacing: 0.5px;
+    background: var(--border-color);
+    color: var(--text-color);
+    padding: 3px 8px;
+    border-radius: 20px;
+    margin-left: 5px;
+}
+ 
+/* =============================================
+   PREVIEW DE TAREFAS
+   ============================================= */
+.user-tasks-preview {
+    margin: 10px 0 0 10px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-color);
+}
+ 
+.dark-mode .user-tasks-preview { background-color: rgba(255, 255, 255, 0.03); }
+ 
+.mini-task {
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+    list-style: none !important;
+}
+ 
+.no-tasks {
+    font-size: 0.8rem;
+    font-style: italic;
+    opacity: 0.7;
+    margin: 5px 0 0 10px;
 }
