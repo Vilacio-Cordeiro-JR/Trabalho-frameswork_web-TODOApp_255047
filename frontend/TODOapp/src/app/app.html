@@ -67,8 +67,7 @@
                 </div>
 
                 <div class="user-actions">
-                  <button class="btn-sm"
-                    (click)="EDITAR_usuario(u._id, prompt('Novo nome para ' + u.nome + ':', u.nome))">
+                  <button class="btn-sm" (click)="abrirPromptEdicao(u)">
                     ✏️
                   </button>
                   <button *ngIf="u.role !== 'adm'" class="btn-sm" (click)="PROMOVER_usuario(u._id)">

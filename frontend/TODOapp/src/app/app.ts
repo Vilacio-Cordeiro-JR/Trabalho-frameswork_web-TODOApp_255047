@@ -229,6 +229,15 @@ export class App implements OnInit {
     });
   }
 
+  abrirPromptEdicao(usuario: any) {
+    // Agora o 'prompt' funciona porque o TS reconhece o escopo do window
+    const novoNome = prompt(`Novo nome para ${usuario.nome}:`, usuario.nome);
+
+    if (novoNome !== null && novoNome.trim() !== "") {
+      this.EDITAR_usuario(usuario._id, novoNome);
+    }
+  }
+
   painelAdminAberto = signal(false);
 
   toggleAdminPainel() {
