@@ -435,3 +435,14 @@ body {
     color: var(--text-color);
     font-weight: 500;
 }
+
+button {
+    font-family: inherit;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.dark-mode .done {
+    opacity: 0.4; /* Slightly dimmer to increase contrast between finished/unfinished */
+    color: #888;
+}
